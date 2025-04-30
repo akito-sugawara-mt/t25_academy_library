@@ -8,12 +8,50 @@
 <body>
     <div class="contents">
         <div th:replace="~{common :: main_sidebar}"></div>
-        <div class="main_contents">
-            <div th:replace="~{common :: header}"></div>
-            <div class="inner_contens">
-                <div class="page_title">書籍一覧</div>
+            <div class="main_contents">
+                <div th:replace="~{common :: header}"></div>
+                    <div class="inner_contens">
+                        <div class="page_title">書籍一覧</div>
+                         <div style="text-align: right;">
+                             <a href="@{/book/add}" class="btn">書籍登録</a>
+                         </div>
+                         <table bookMst="1" style="width:100%; border-collapse: collapse;">
+                            <thead>
+                                <tr>
+                                    <th>書籍名</th>
+                                    <th>ISBN</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="book : ${bookMstList}">
+                                    <td th:text="${book.title}">書籍名</td>
+                                    <td th:text="${book.isbn}">ISBN</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
             </div>
-        </div>
     </div>
     <div th:replace="~{common :: footer}"></div>
 </body>
+
+<!-- <div style="display: flex; justify-content: flex-end; margin-bottom: 10px;">
+    <a href="/mt_library/book/add" 
+    style="background-color: #4CAF50; color: black; padding: 5px 10px; text-decoration: none; border-radius: 5px;">
+    書籍登録
+    </a>
+    <table bookMst="1" style="width:100%; border-collapse: collapse;">
+        <thead>
+            <tr>
+                <th>書籍名</th>
+                <th>ISBN</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="book : ${books}">
+                <td th:text="${book.title}">書籍名</td>
+                <td th:text="${book.isbn}">ISBN</td>
+            </tr>
+        </tbody>
+    </table>
+</div>   -->
