@@ -4,6 +4,14 @@
     <title th:text="${title}+' | MTLibrary'"></title>
     <link rel="stylesheet" th:href="@{/css/book/index.css}" />
     <script type="text/javascript" th:src="@{/js/book/index.js}"></script>
+    <!-- <script th:inline="javascript">
+        /*<![CDATA[*/
+        let message = /*[[${message}]]*/ null;
+        if (message !== null && message !== '') {
+            alert(message);
+        }
+        /*]]>*/
+    </script> -->
 </head>
 <body>
     <div class="contents">
@@ -42,15 +50,34 @@
                     </div>
             </div>
     </div>
-     <div id="flash-message" th:if="${message}" th:attr="data-message=${message}"></div>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const msg = document.getElementById("flash-message")?.dataset.message;
-            if (msg) {
-                alert(msg);
-            }
-        });
-    </script>
     <div th:replace="~{common :: footer}"></div>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        let message = /*[[${message}]]*/ null;
+        if (message !== null && message !== '') {
+            alert(message);
+        }
+        /*]]>*/
+    </script>
 </body>
 
+<!-- <div style="display: flex; justify-content: flex-end; margin-bottom: 10px;">
+    <a href="/mt_library/book/add" 
+    style="background-color: #4CAF50; color: black; padding: 5px 10px; text-decoration: none; border-radius: 5px;">
+    書籍登録
+    </a>
+    <table bookMst="1" style="width:100%; border-collapse: collapse;">
+        <thead>
+            <tr>
+                <th>書籍名</th>
+                <th>ISBN</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="book : ${books}">
+                <td th:text="${book.title}">書籍名</td>
+                <td th:text="${book.isbn}">ISBN</td>
+            </tr>
+        </tbody>
+    </table>
+</div>   -->

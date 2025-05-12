@@ -24,17 +24,35 @@
   margin-top: 50px;
 }
 
-#submit_btn {
+.submit_btn {
   width: 80px;
   height: 45px;
-  font-size: 20px;
+  font-size: 16px;
   background-color: #9CF2D3;
   color: #545454;
-  border-radius: 0.5rem;
-  border: none;
+  border-radius: 0.6rem;
+  border: 1px solid gray;
+  text-align: center;
+  display: block;
+  margin: 20px auto;
 }
 
-#submit_btn:hover {
+.submit_btn:hover {
   cursor: pointer;
   opacity: 0.6;
 }
+
+.mark{
+  color:red;
+}
+
+input[type="text"]{
+  width: 100%;
+  max-width: 600px;
+}
+
+.note{
+  color: red;
+  font-size: 18px;
+}
+
