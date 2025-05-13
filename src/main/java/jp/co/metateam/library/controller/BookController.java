@@ -91,7 +91,7 @@ public class BookController {
     }
 
     @PostMapping("/book/edit")
-    public String edit(@Valid @ModelAttribute BookMstDto bookMstDto, BindingResult result, RedirectAttributes ra) {
+    public String edit(@Valid @ModelAttribute BookMstDto bookMstDto, BindingResult result,Model model, RedirectAttributes ra) {
         try {
             boolean errTitleFlg = false;
             boolean errIsbnFlg = false;
@@ -100,7 +100,7 @@ public class BookController {
             BookMstDto original = bookMstService.findById(bookMstDto.getId());
             if (original == null) {
                 result.rejectValue("id", "error.value", "指定された書籍が存在しません");
-                throw new Exception("Book not found.");
+                return "book/edit";
             }
 
             String titleExist = bookMstDto.getTitle();
@@ -127,8 +127,8 @@ public class BookController {
             }
 
             // バリデーションエラーがあった場合
-            if (errTitleFlg || errIsbnFlg) {
-                throw new Exception("Validation failed.");
+            if (result.hasErrors()) {
+            return "book/edit";
             }
 
             // 保存処理
