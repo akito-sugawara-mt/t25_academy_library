@@ -13,25 +13,26 @@
         <div class="main_contents">
             <div th:replace="~{common :: header}"></div>
             <div class="inner_contens">
-                <div class="page_title">書籍登録</div>
+                <div class="page_title">書籍編集</div>
                 <div class="page_contents">
-                    <form id="book_register_form" th:object="${bookMstDto}" th:action="@{/book/add}" method="post">
+                    <form id="book_register_form" th:object="${bookMstDto}" th:action="@{/book/edit}" method="post">
                         <p class="note">＊は必須です </p>
                         <div style="display: flex; justify-content: flex-end; margin-bottom: 10px;">
                             <span>
                                 <a th:href="@{/book/index}" class="link">← 一覧へ戻る</a>
                             </span>
                         </div>
+                        <input type="hidden" th:field="*{id}" />
                             <p>書籍名<span class="mark">＊</span>
-                                <input type="text" name="title" th:field="*{title}" placeholder="書籍名を入力"/>
+                                <input type="text" th:field="*{title}" placeholder="書籍名を入力"/>
                                 <div class="error_msg" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
                              </p>
-                            <p>ISBM<span class="mark">＊</span>
-                                <input type="text" name="isbn" th:field="*{isbn}" placeholder="ISBNを入力"/>
+                            <p>ISBN<span class="mark">＊</span>
+                                <input type="text" th:field="*{isbn}" placeholder="ISBNを入力"/>
                                 <div class="error_msg" th:if="${#fields.hasErrors('isbn')}" th:errors="*{isbn}"></div>
                              </p> 
                        
-                                <button type="submit" class="submit_btn">保存 
+                                <button type="submit" class="submit_btn">変更
                                     
 
                                 </button>
@@ -40,5 +41,14 @@
             </div>
         </div>
     </div>
+    <div id="flash-message" th:if="${message}" th:attr="data-message=${message}"></div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const msg = document.getElementById("flash-message")?.dataset.message;
+            if (msg) {
+                alert(msg);
+            }
+        });
+    </script>
     <div th:replace="~{common :: footer}"></div>
 </body>

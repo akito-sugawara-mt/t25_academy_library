@@ -1,0 +1,57 @@
+#book_register_form {
+    font-size: 20px;
+  }
+  
+  #book_register_form p .asterisk {
+    font-size: 14px;
+    margin-left: 5px;
+    margin-top: -5px;
+  }
+  
+  #book_register_form .form_input {
+    display: inline-block;
+    width: 100%;
+    height: 55px;
+    border: 2px solid #D9D9D9;
+    padding: 2px 10px;
+    font-size: 20px;
+  }
+  
+  
+  #book_register_form .btn_block {
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+  }
+  
+  .submit_btn {
+    width: 80px;
+    height: 45px;
+    font-size: 16px;
+    background-color: #9CF2D3;
+    color: #545454;
+    border-radius: 0.6rem;
+    border: 1px solid gray;
+    text-align: center;
+    display: block;
+    margin: 20px auto;
+  }
+  
+  .submit_btn:hover {
+    cursor: pointer;
+    opacity: 0.6;
+  }
+  
+  .mark{
+    color:red;
+  }
+  
+  input[type="text"]{
+    width: 100%;
+    max-width: 600px;
+  }
+  
+  .note{
+    color: red;
+    font-size: 18px;
+  }

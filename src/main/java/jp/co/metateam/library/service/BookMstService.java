@@ -44,19 +44,19 @@ public class BookMstService {
 
         return bookMstDtoList;
     }
-    public String searchIsbn(String id) {
-        Optional<BookMst> bookMstOptional = bookMstRepository.selectByisbn(Long.parseLong(id));
+    public String searchIsbn(String isbn) {
+        Optional<BookMst> bookMstOptional = bookMstRepository.selectByisbn(isbn);
         if (bookMstOptional.isPresent()) {
             return bookMstOptional.get().getIsbn();
         } else {
             return null;
         }
     }
-    
+
     @Transactional
     public void save(BookMstDto bookMstDto) {
         try {
-            // AccountDtoからAccountへの変換
+
             BookMst bookMst = new BookMst();
 
             bookMst.setTitle(bookMstDto.getTitle());
@@ -69,4 +69,30 @@ public class BookMstService {
             throw e;
         }
     }
+    public BookMstDto findById(Long id) {
+        BookMst entity = bookMstRepository.findById(id).orElse(null);
+        if (entity == null) return null;
+     
+        BookMstDto dto = new BookMstDto();
+        dto.setId(entity.getId());
+        dto.setTitle(entity.getTitle());
+        dto.setIsbn(entity.getIsbn());
+        return dto;
+    }
+    public void update(BookMstDto bookMstDto) {
+        try {
+
+            BookMst bookMst = bookMstRepository.findById(bookMstDto.getId())
+            .orElseThrow(() -> new RuntimeException("書籍が見つかりません"));
+
+            bookMst.setTitle(bookMstDto.getTitle());
+            bookMst.setIsbn(bookMstDto.getIsbn());
+
+            // データベースへの保存
+            this.bookMstRepository.save(bookMst);
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
 }
