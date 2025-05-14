@@ -81,9 +81,10 @@ public class BookController {
     }
 
     @GetMapping("/book/edit/{id}")
-    public String edit(@PathVariable ("id") long id, Model model){
+    public String edit(@PathVariable ("id") long id, Model model,RedirectAttributes ra){
         BookMstDto bookMstDto = bookMstService.findById(id);
     if (bookMstDto == null){
+         ra.addFlashAttribute("message", "指定された書籍が存在しません");
         return "redirect:/book/index";
     }
     model.addAttribute("bookMstDto", bookMstDto);
@@ -100,6 +101,7 @@ public class BookController {
             BookMstDto original = bookMstService.findById(bookMstDto.getId());
             if (original == null) {
                 result.rejectValue("id", "error.value", "指定された書籍が存在しません");
+                model.addAttribute("message", "指定された書籍が存在しません");
                 return "book/edit";
             }
 
