@@ -1,5 +1,7 @@
 package jp.co.metateam.library.service;
 
+import java.sql.Timestamp; 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -79,6 +81,8 @@ public class BookMstService {
         dto.setIsbn(entity.getIsbn());
         return dto;
     }
+
+     @Transactional
     public void update(BookMstDto bookMstDto) {
         try {
 
@@ -94,5 +98,26 @@ public class BookMstService {
             throw e;
         }
     }
+    public BookMstDto findAvailableById(Long id) {
+        Optional<BookMst> entityOpt = bookMstRepository.findByIdAndDeletedFlgFalse(id);
+        if (entityOpt.isEmpty()) return null;
 
+        BookMst entity = entityOpt.get();
+        BookMstDto dto = new BookMstDto();
+        dto.setId(entity.getId());
+        dto.setTitle(entity.getTitle());
+        dto.setIsbn(entity.getIsbn());
+        return dto;
+    }
+
+    @Transactional
+    public void logicalDelete(Long id) {
+        Optional<BookMst> bookOpt = bookMstRepository.findByIdAndDeletedFlgFalse(id);
+        if (bookOpt.isPresent()) {
+            BookMst book = bookOpt.get();
+            book.setDeletedFlg(true);
+            book.setDeletedAt(Timestamp.valueOf(LocalDateTime.now()));  
+            bookMstRepository.save(book);
+        }
+    }
 }

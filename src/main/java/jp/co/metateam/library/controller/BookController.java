@@ -1,5 +1,6 @@
 package jp.co.metateam.library.controller;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jakarta.validation.Valid;
@@ -179,4 +181,17 @@ public class BookController {
         }
         return errIsbnFlg;
     }
+
+    @PostMapping("/book/delete/{id}")
+    public String delete(@PathVariable("id") Long id, RedirectAttributes ra) {
+    BookMstDto book = bookMstService.findAvailableById(id);
+    if (book == null) {
+        ra.addFlashAttribute("errorMessage", "指定された書籍が存在しません");
+        return "redirect:/book/index";
+    }
+    bookMstService.logicalDelete(id); 
+    ra.addFlashAttribute("successMessage", "削除が完了しました");
+    return "redirect:/book/index";
+    }
+    
 }
