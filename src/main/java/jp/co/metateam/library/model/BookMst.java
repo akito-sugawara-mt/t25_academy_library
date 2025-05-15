@@ -1,8 +1,5 @@
 package jp.co.metateam.library.model;
 
-import java.sql.Timestamp;
-import java.util.List;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -11,6 +8,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.sql.Timestamp;
 
 /**
  * 書籍マスタ
@@ -35,6 +33,10 @@ public class BookMst {
     @Column(name = "deleted_at")
     private Timestamp deletedAt;
 
+    /** 論理削除フラグ */
+    @Column(name = "deleted_flg", nullable = false)
+    private Boolean deletedFlg = false;
+
     /** Getters */
 
     public Long getId() {
@@ -49,10 +51,12 @@ public class BookMst {
         return this.title;
     }
 
-    public Timestamp getDeletedAt() {
-        return this.deletedAt;
+    public Boolean getDeletedFlg() {
+        return this.deletedFlg; 
     }
-
+     public Timestamp getDeletedAt() {
+         return this.deletedAt; 
+    } 
     /** Setters */
 
     public void setId(Long id) {
@@ -67,7 +71,10 @@ public class BookMst {
         this.title = title;
     }
 
-    public void setDeletedAt(Timestamp deletedAt) {
-        this.deletedAt = deletedAt;
+    public void setDeletedFlg(Boolean deletedFlg) {
+        this.deletedFlg = deletedFlg;
     }
+    public void setDeletedAt(Timestamp deletedAt) {
+         this.deletedAt = deletedAt; 
+    } 
 }

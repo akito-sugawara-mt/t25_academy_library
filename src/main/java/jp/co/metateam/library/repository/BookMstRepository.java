@@ -9,12 +9,18 @@ import java.util.Optional;
 
 public interface BookMstRepository extends JpaRepository<BookMst, Long> {
 
-	@Query(value = "SELECT * FROM book_mst LIMIT 1000", nativeQuery = true)
-	List<BookMst> findLimitedBook();
+     @Query(value = "SELECT * FROM book_mst WHERE deleted_flg = false LIMIT 1000", nativeQuery = true)
+    List<BookMst> findLimitedBook(); 
 
-	@Query(value = "SELECT * FROM book_mst WHERE id = ?1", nativeQuery = true)
-	Optional<BookMst> selectById(Long id);
+	// @Query(value = "SELECT * FROM book_mst WHERE id = ?1", nativeQuery = true)
+	// Optional<BookMst> selectById(Long id);
 
 	@Query(value = "SELECT * FROM book_mst WHERE isbn = ?1", nativeQuery = true)
 	Optional<BookMst> selectByisbn(String isbn);
+
+	@Query(value = "SELECT * FROM book_mst WHERE id = ?1 AND deleted_flg = false", nativeQuery = true)
+    Optional<BookMst> findById(Long id);
+
+   @Query(value = "SELECT * FROM book_mst WHERE isbn = ?1 AND deleted_flg = false", nativeQuery = true)
+    Optional<BookMst> findByIsbn(String isbn);
 }
