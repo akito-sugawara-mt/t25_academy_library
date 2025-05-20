@@ -30,9 +30,12 @@
                                         <a th:href="@{/book/edit/{id}(id=${book.id})}" class="edit_btn">
                                             <img th:src="@{/images/icons/edit.png}" alt="編集アイコン" class="edit_icon">
                                         </a>
-                                        <a th:href="@{/book/delete}" class="edit_btn" onclick="return confirm('削除してもよろしいですか？');" >
-                                            <img th:src="@{/images/icons/trash.png}" alt="削除アイコン"class="edit_icon">
-                                        </a>
+                                        <form th:action="@{/book/delete/{id}(id=${book.id})}" method="post" th:id="'deleteForm' + ${book.id}" style="display:inline;">
+                                            <a href="#" class="edit_btn" th:onclick="'return confirmDelete(' + ${book.id} + ');'">
+                                                <img th:src="@{/images/icons/trash.png}" alt="削除アイコン" class="edit_icon">
+                                            </a>
+                                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                                        </form>
                                         <span th:text="${book.title}">書籍名</span>
                                     </td>
                                     <td th:text="${book.isbn}">ISBN</td>
@@ -42,14 +45,47 @@
                     </div>
             </div>
     </div>
-     <div id="flash-message" th:if="${message}" th:attr="data-message=${message}"></div>
+    <div id="customConfirmModal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <p>本当に削除してもよろしいですか？</p>
+            <button id="yesBtn">YES</button>
+            <button id="noBtn">NO</button>
+        </div>
+    </div>
+    <div id="flash-message" th:if="${message}" th:attr="data-message=${message}"></div>
+    <div id="success-message" th:if="${successMessage}" th:attr="data-success=${successMessage}"></div>
+    <div id="error-message" th:if="${errorMessage}" th:attr="data-error=${errorMessage}"></div>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const msg = document.getElementById("flash-message")?.dataset.message;
             if (msg) {
                 alert(msg);
             }
+            const successMsg = document.getElementById("success-message")?.dataset.success;
+            if (successMsg) {
+            alert(successMsg);
+            }
+            const errorMsg = document.getElementById("error-message")?.dataset.error;
+            if (errorMsg) {
+            alert(errorMsg);
+            }
         });
+        function confirmDelete(bookId) {
+            const modal = document.getElementById("customConfirmModal");
+            modal.style.display = "flex";
+
+            const yesBtn = document.getElementById("yesBtn");
+            const noBtn = document.getElementById("noBtn");
+
+            yesBtn.onclick = function () {
+                document.getElementById("deleteForm" + bookId).submit();
+                modal.style.display = "none";
+            };
+            noBtn.onclick = function () {
+                modal.style.display = "none";
+            };
+            return false;
+        }
     </script>
     <div th:replace="~{common :: footer}"></div>
 </body>
