@@ -18,6 +18,4 @@ public interface BookMstRepository extends JpaRepository<BookMst, Long> {
 	@Query(value = "SELECT * FROM book_mst WHERE id = ?1 AND deleted_flg = false", nativeQuery = true)
     Optional<BookMst> findById(Long id);
 
-   @Query(value = "SELECT * FROM book_mst WHERE isbn = ?1 AND deleted_flg = false", nativeQuery = true)
-    Optional<BookMst> findByIsbn(String isbn);
 }
